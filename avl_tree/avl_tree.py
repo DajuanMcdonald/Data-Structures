@@ -1,10 +1,11 @@
-"""
+ """
 Node class to keep track of
 the data internal to individual nodes
 """
 class Node:
-    def __init__(self, key):
+    def __init__(self, parent, key):
         self.key = key
+        self.parent = parent
         self.left = None
         self.right = None
 
@@ -53,15 +54,63 @@ class AVLTree:
     node the parent and making the old parent the left child
     of the new parent. 
     """
-    def left_rotate(self):
-        pass
+    def left_rotate(self, left_child):
+        right_child = left_child.right
+        right_child.parent = left_child.parent
+
+        if right_child.parent is None:
+            self.node = right_child
+
+        else:
+            if right_child.parent.left is left_child:
+                right_child.parent.left = left_child
+
+            elif right_child.parent.right is left_child:
+                right_child.parent.right = right_child
+
+        left_child.right = right_child.left
+
+        if left_child.right is not None:
+            left_child.right.parent = left_child
+
+        right_child.left = left_child
+        left_child.parent = right_child
+
+        #update the height of left_child
+
+        #update the height of right_child
 
     """
     Perform a right rotation, making the left child of this
     node the parent and making the old parent the right child
     of the new parent. 
     """
-    def right_rotate(self):
+    def right_rotate(self, right_child):
+        
+        left_child = right_child.left
+        left_child.parent = right_child.parent
+
+        if left_child.parent is None:
+            self.node = left_child
+
+        else:
+            if left_child.parent.left is right_child:
+                left_child.parent.left = left_child
+
+            elif left_child.right is right_child:
+                left_child.parent.right = left_child
+
+        right_child.left = left_child.right
+        if right_child.left is not None:
+            right_child.left.parent = right_child
+
+        left_child.right = right_child
+        right_child.parent = left_child
+
+        # update hight of right_child
+
+        #update height of left_child
+        
         pass
 
     """
@@ -78,4 +127,17 @@ class AVLTree:
     if we need to rebalance
     """
     def insert(self, key):
-        pass
+        if node is None:
+            return
+        if node.key < self.key:
+            if self.left is None:
+                self.left = node
+
+            else:
+                self.left.insert(node)
+
+        else:
+            if self.right is None:
+                self.right = node
+            else:
+                self.right.insert(node)
