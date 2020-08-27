@@ -71,7 +71,36 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+        
+        if self.left:
+            self.left.for_each(fn)
+
+        if self.right:
+            self.right.for_each(fn)
+
+        print(self.value)
+
+    def for_each_iterative(self, fn):
+        cur_node = self
+        stack = []
+        stack.push(cur_node)
+
+        while len(stack) > 0:
+            cur_node = stack.pop()
+
+            if cur_node.left is None:
+                stack.push(cur_node.left)
+        
+
+            if cur_node.right is None:
+                stack.push(cur_node.right)
+
+
+            fn(cur_node.value)
+                
+            
+    
 
     # Part 2 -----------------------
 
